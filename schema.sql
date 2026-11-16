@@ -32,7 +32,7 @@ begin
  if octet_length(document::text)>20000000 then raise exception 'document_too_large'; end if;
  insert into public.feiya_workspaces(owner_id) values(actor) on conflict do nothing;
  update public.feiya_workspaces set payload=jsonb_build_object('sessions',document->'sessions','beans',document->'beans','records',document->'records'), revision=revision+1,updated_at=now() where owner_id=actor and revision=expected_revision returning revision into next_revision;
- if next_revision is null then raise exception 'revision_conflict' using errcode='40001'; end if;
+ if next_revision is null then raise exception 'revision_conflict' using errcode='PT409'; end if;
  return next_revision;
 end $$;
 create or replace function feiya_private.feiya_admin_review()

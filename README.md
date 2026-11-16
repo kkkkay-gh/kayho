@@ -16,11 +16,13 @@
 2. 账号用户名建议 `feiya_user` 和 `feiya_admin`，其认证邮箱分别为 `feiya_user@accounts.feiya.example` 和 `feiya_admin@accounts.feiya.example`。这些是内部登录标识，不用于收件；部署时通过管理 API 确认邮箱。
 3. 管理端插入对应的 `feiya_profiles` 行，分别分配 `user` / `admin`。关闭公开注册。生成随机密码并私下交付，不提交到仓库。
 4. 在 `config.js` 配置项目 URL 和 public publishable key。禁止写入 service-role key。
-5. 创建 GitHub 仓库并提交代码；Settings → Pages → Source 选择 Deploy from a branch，选择 main / (root)。
+5. 创建 GitHub 仓库并提交代码；Settings → Pages → Source 选择 Deploy from a branch，main / root。
 6. 上线后必须用两种真实账号分别验证：普通账号不能调用全员回顾或读取其他账号数据；管理员能回顾普通用户提交的数据。
 
 ## 当前状态
 
-实现已准备，尚未配置真实 Supabase 项目、账号，也尚未发布至 GitHub。
-GitHub 仓库创建需要用户在已打开的页面登录。Supabase 连接仍待用户完成。
-旧版浏览器本地记录不会自动上传；本次不读取或发送旧版记录。
+已部署到 https://kkkkay-gh.github.io/kayho/ 。项目连接、数据库权限、普通账号和管理员账号已配置。账号密码通过独立私密文件交付，不在仓库内。
+
+已真实验证账号密码登录、普通用户仅能读取自己的数据、不能修改角色、不能读取全员回顾、匿名访问拒绝、旧版本保存冲突拒绝，以及管理员通过授权接口回顾普通用户的测试记录。
+
+当前保留一条明确标记“功能测试示例 · 非正式杯测”的记录。旧版浏览器本地记录不自动上传。
