@@ -16,5 +16,6 @@
   async function save(state,revision){return request('/rest/v1/rpc/feiya_save_workspace',{method:'POST',token:await access(),body:{expected_revision:revision,document:{sessions:state.sessions,beans:state.beans,records:state.records}}})}
   async function review(){return request('/rest/v1/rpc/feiya_admin_review',{method:'POST',token:await access(),body:{}})}
   async function logout(){try{if(session)await request('/auth/v1/logout',{method:'POST',token:await access()})}finally{remember(null)}}
-  window.FeiyaCloud={configured,login,load,save,review,logout};
+  async function cupping(action,args={}){return request('/rest/v1/rpc/feiya_cupping',{method:'POST',token:await access(),body:{action,args}})}
+  window.FeiyaCloud={cupping,configured,login,load,save,review,logout};
 })();
