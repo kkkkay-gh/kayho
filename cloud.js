@@ -17,5 +17,7 @@
   async function review(){return request('/rest/v1/rpc/feiya_admin_review',{method:'POST',token:await access(),body:{}})}
   async function logout(){try{if(session)await request('/auth/v1/logout',{method:'POST',token:await access()})}finally{remember(null)}}
   async function cupping(action,args={}){return request('/rest/v1/rpc/feiya_cupping',{method:'POST',token:await access(),body:{action,args}})}
-  window.FeiyaCloud={cupping,configured,login,load,save,review,logout};
+  async function reviewNotes(){return request('/rest/v1/feiya_review_notes?select=session_id,summary,updated_at',{token:await access()})}
+  async function saveReviewNote(sessionId,summary){return request('/rest/v1/rpc/feiya_save_review_note',{method:'POST',token:await access(),body:{target_session:sessionId,summary_text:summary}})}
+  window.FeiyaCloud={reviewNotes,saveReviewNote,cupping,configured,login,load,save,review,logout};
 })();
