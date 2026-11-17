@@ -10,7 +10,7 @@ async function openWorkspace(){
  const data=await FeiyaCloud.load();cloudProfile=data.profile;cloudRevision=data.revision;state=data.state;state.sessions||=[];state.beans||=[];state.records||=[];
  for(const s of state.sessions)s.beanIds||=[];
  activeSession=state.sessions[0]?.id||null;selected=null;scores={};currentView='home';reviewMode=false;
- document.querySelector('#login-root').hidden=true;document.querySelector('#app-root').hidden=false;document.querySelector('#sync-status').textContent='云端记录已加载';render();await sharedRefresh();
+ document.querySelector('#login-root').hidden=true;document.querySelector('#app-root').hidden=false;document.querySelector('#sync-status').textContent='云端记录已加载';render();
 }
 document.querySelector('#login-form').onsubmit=async e=>{
  e.preventDefault();const button=e.submitter;button.disabled=true;document.querySelector('#login-message').textContent='';
@@ -19,10 +19,9 @@ document.querySelector('#login-form').onsubmit=async e=>{
  finally{button.disabled=false}
 };
 document.querySelector('#logout').onclick=async()=>{
- if(cloudSaving)return;try{await FeiyaCloud.logout()}catch{}cloudProfile=null;state={sessions:[],beans:[],records:[]};resetEvaluation();sharedSession=null;participant='';sharedList=[];sh.innerHTML='';document.querySelector('#app-root').hidden=true;document.querySelector('#login-root').hidden=false;document.querySelector('#login-message').textContent='已退出';
+ if(cloudSaving)return;try{await FeiyaCloud.logout()}catch{}cloudProfile=null;state={sessions:[],beans:[],records:[]};resetEvaluation();document.querySelector('#app-root').hidden=true;document.querySelector('#login-root').hidden=false;document.querySelector('#login-message').textContent='已退出';
 };
 document.querySelector('#review-all').onclick=async()=>{
- sharedMode(false);document.body.classList.add('legacy-mode');
  if(cloudProfile?.role!=='admin'||cloudSaving)return;
  try{const rows=await FeiyaCloud.review();const combined={sessions:[],beans:[],records:[]};
  for(const row of rows){const data=row.payload||{};combined.sessions.push(...(data.sessions||[]).map(s=>({...s,name:row.username+' · '+s.name})));combined.beans.push(...(data.beans||[]));combined.records.push(...(data.records||[]))}
@@ -32,7 +31,7 @@ document.querySelector('#review-all').onclick=async()=>{
  window.feiyaReview={combined};
  }catch(error){toast('无法读取全员回顾：'+error.message)}
 };
-document.querySelector('#exit-review').onclick=()=>{document.body.classList.remove('legacy-mode');sharedSession=null;sharedRun(sharedRefresh);reviewMode=false;window.feiyaReview=null;document.querySelector('.history-modes').hidden=true;currentView='home';render()};
+document.querySelector('#exit-review').onclick=()=>{reviewMode=false;window.feiyaReview=null;document.querySelector('.history-modes').hidden=true;currentView='home';render()};
 for(const [id,mode] of [['by-session','session'],['by-bean','bean']])document.querySelector('#'+id).onclick=()=>{
  if(!reviewMode)return;const own=state;state=window.feiyaReview.combined;historyMode=mode;renderHistory();state=own;document.querySelectorAll('[data-winner]').forEach(el=>el.disabled=true);document.querySelector('#by-session').classList.toggle('active',mode==='session');document.querySelector('#by-bean').classList.toggle('active',mode==='bean');
 };
