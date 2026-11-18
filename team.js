@@ -15,7 +15,7 @@ async function openWorkspace(){
  activeSession=state.sessions[0]?.id||null;selected=null;scores={};currentView='home';historyMode='session';reviewMode=false;
  $('#login-root').hidden=true;$('#app-root').hidden=false;$('#sync-status').textContent='云端记录已加载';render();
 }
-$('#login-form').onsubmit=async e=>{e.preventDefault();const button=e.submitter;button.disabled=true;$('#login-message').textContent='';try{await FeiyaCloud.login($('#username').value.trim(),$('#password').value);$('#password').value='';await openWorkspace()}catch(error){$('#login-message').textContent=error.status===400?'账号或密码不正确':error.message}finally{button.disabled=false}};
+$('#login-form').onsubmit=async e=>{e.preventDefault();const button=e.submitter;button.disabled=true;$('#login-message').textContent='';try{await FeiyaCloud.login($('#username').value.trim(),$('#password').value,$('#keep-login').checked);$('#password').value='';await openWorkspace();if($('#keep-login').checked&&!FeiyaCloud.keepsLogin())toast('此浏览器未允许保持登录，本次仍可正常使用')}catch(error){$('#login-message').textContent=error.status===400?'账号或密码不正确':error.message}finally{button.disabled=false}};
 $('#logout').onclick=async()=>{if(cloudSaving)return;try{await FeiyaCloud.logout()}catch{}cloudProfile=null;state={sessions:[],beans:[],records:[]};reviewNotes={};resetEvaluation();$('#app-root').hidden=true;$('#login-root').hidden=false;$('#login-message').textContent='已退出'};
 $('#review-all').onclick=async()=>{
  if(cloudProfile?.role!=='admin'||cloudSaving)return;
@@ -28,5 +28,7 @@ $('#review-all').onclick=async()=>{
 $('#exit-review').onclick=()=>{reviewMode=false;window.feiyaReview=null;currentView='home';render()};
 for(const [id,mode] of [['by-session','session'],['by-bean','bean']])$('#'+id).onclick=()=>{historyMode=mode;paintHistory()};
 const baseShowView=showView;showView=view=>{reviewMode=false;window.feiyaReview=null;if(view==='history'&&cloudProfile?.role!=='admin')return;baseShowView(view)};
-if(FeiyaCloud.configured())window.addEventListener('DOMContentLoaded',()=>openWorkspace().catch(()=>{$('#app-root').hidden=true;$('#login-root').hidden=false}));else $('#login-message').textContent='部署配置尚未完成，账号服务暂未开放。';
+$('#forgot-password').onclick=()=>$('#password-help').showModal();
+$('#close-password-help').onclick=()=>$('#password-help').close();
+if(FeiyaCloud.configured())window.addEventListener('DOMContentLoaded',async()=>{if(!FeiyaCloud.hasSession())return;const button=$('#login-form button[type=submit]');button.disabled=true;$('#login-message').textContent='正在自动登录…';try{await openWorkspace();$('#login-message').textContent=''}catch(error){$('#app-root').hidden=true;$('#login-root').hidden=false;$('#login-message').textContent=[400,401,403].includes(error.status)?'登录已过期，请重新输入密码。':'暂时连接不上，请检查网络后刷新，或重新登录。'}finally{button.disabled=false}});else $('#login-message').textContent='部署配置尚未完成，账号服务暂未开放。';
 $('#export').onclick=()=>{if(cloudProfile?.role!=='admin')return;const data={...(reviewMode?window.feiyaReview.combined:state),adminSummaries:reviewNotes};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='啡芽杯测-'+today()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
