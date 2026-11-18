@@ -1,0 +1,54 @@
+/* Visual hierarchy only: existing actions, permissions and record behavior stay intact. */
+#app-root{padding:24px 22px 30px;color:#25314b}
+#app-root>header{padding:0 0 17px;border-bottom:1px solid #e2e7f0;align-items:center}
+#app-root>header .brand{font-size:21px;line-height:1.15;letter-spacing:-.65px;gap:6px;flex-wrap:nowrap;font-weight:750}
+#app-root>header .brand small{font-size:7px;letter-spacing:.55px;color:#939bad;font-weight:500;line-height:1.4;max-width:70px}
+#app-root>header .pill{font-size:9px;padding:5px 8px;border:0;background:transparent;color:#9aa3b4;white-space:nowrap}
+.workspace-utility{padding:8px 0 0}
+.workspace-utility .account-bar{margin:0;gap:15px;min-height:30px;font-size:10px;color:#929bad;line-height:1.5}
+.workspace-utility .account-bar .text{font-size:10px;color:#6d7993;min-height:32px;padding:4px 0}
+.workspace-utility #review-all{color:#002fa7}
+.workspace-utility #sync-status{font-size:9px;color:#a0a8b6;line-height:1.5;min-height:14px;margin:0}
+#app-root>.workspace-heading{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:28px 0 23px}
+.workspace-eyebrow{color:#002fa7;font-size:8px;font-weight:650;letter-spacing:2.2px;margin-bottom:9px}
+#app-root>.workspace-heading h1{font-size:29px;font-weight:700;letter-spacing:-.7px;line-height:1.2;margin:0;color:#1d2945}
+#app-root>.workspace-heading p{font-size:11px;line-height:1.6;color:#8993a6;margin:10px 0 0}
+#new-session{flex-shrink:0;width:auto;margin:0;padding:12px 14px;min-height:44px;border-radius:10px;font-size:12px;font-weight:600;background:#002fa7;box-shadow:0 5px 13px #002fa718}
+#app-root>.search-box{margin:0 0 17px}
+#app-root .search-label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#app-root .search-input-wrap{min-height:44px;border-radius:11px;border-color:#e3e7f0;background:#fff;padding:0 13px;gap:9px}
+#app-root .search-input-wrap svg{width:16px;height:16px;flex-basis:16px;stroke:#8d99b2;stroke-width:1.6}
+#app-root .search-input-wrap input{font-size:14px;padding:11px 0;color:#35435f}
+#app-root .search-input-wrap input::placeholder{color:#a5adbb;font-size:11px}
+#app-root>nav{border:0;padding:4px;background:#e9edf5;border-radius:11px;gap:4px;margin:0 0 26px}
+#app-root>nav .tab{flex:1;border:0;border-radius:8px;min-height:40px;padding:9px 10px;font-size:12px;line-height:1.5;font-weight:500;color:#939bad;display:flex;justify-content:center;align-items:center;gap:6px}
+#app-root>nav .tab.active{background:#fff;color:#002fa7;font-weight:650;box-shadow:0 2px 6px #26395908}
+#app-root>nav .tab span{font-size:9px;background:#dde3ef;color:#8792a6;border-radius:5px;padding:1px 5px;line-height:1.5}
+#app-root>nav .tab.active span{background:#eef2ff;color:#002fa7}
+.scene-list-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px;padding:0 1px}
+.scene-list-heading h2{font-size:13px;font-weight:650;letter-spacing:.1px;margin:0;color:#4a5670}
+.scene-list-heading>span{font-size:9px;line-height:1.5;color:#a4acbb}
+#home .scene-list-item{position:relative;border:1px solid #e1e6f0;box-shadow:0 3px 13px #233d6304;border-radius:14px;margin-bottom:12px;transition:border-color .15s}
+#home .scene-list-item:hover{border-color:#c8d4f5}
+#home .scene-list-item .session-card{padding:19px 17px 14px;background:#fff;border-radius:14px}
+#home .session-card-top{align-items:flex-start;gap:12px}
+#home .session-card-top strong{font-size:16px;font-weight:650;line-height:1.65;color:#26344f;letter-spacing:-.15px;overflow-wrap:anywhere}
+#home .session-card-top em{font-size:9px;line-height:1.5;font-weight:400;padding:4px 7px;border-radius:5px;background:#f0f3f8;color:#8a96ab;flex-shrink:0;margin-top:3px}
+#home .session-card small{font-size:10px;line-height:1.7;color:#949eaf;margin:9px 0 5px}
+#home .session-card>span:last-child{font-size:10px;line-height:1.7;color:#909bad}
+#home .session-card b{display:block;float:none;width:fit-content;color:#002fa7;font-size:11px;font-weight:600;line-height:1.6;margin-top:14px;padding:5px 0;min-height:28px}
+#home .scene-list-actions{position:absolute;bottom:8px;right:15px;padding:0}
+#home .scene-delete-action{font-size:10px;color:#b0a3a9;min-height:36px;padding:8px 0 8px 14px}
+#home .scene-delete-action:hover{color:#9c6268}
+#home #scene-trash-button{font-size:10px;color:#a5adbb;min-height:40px;padding:8px 1px;margin-top:1px}
+#app-root footer{border-top:1px solid #e5e9f1;margin-top:40px;padding:19px 0 0;color:#a7afbd;font-size:9px;line-height:1.8}
+#app-root footer small{font-size:8px;color:#b4bbc6;margin-top:3px}
+body[data-screen=history] #app-root>.workspace-heading,body[data-screen=detail] #app-root>.workspace-heading{display:none}
+body[data-screen=history] #app-root>.search-box,body[data-screen=detail] #app-root>.search-box{margin-top:17px}
+body[data-screen=history] #app-root>nav,body[data-screen=detail] #app-root>nav{margin-bottom:22px}
+@media(max-width:359px){#app-root{padding:20px 16px 26px}#app-root>header .brand{font-size:19px}#app-root>.workspace-heading h1{font-size:26px}#new-session{font-size:11px;padding:11px 12px}.workspace-utility .account-bar{gap:12px}}
+@media(min-width:650px){#app-root{max-width:520px;margin:32px auto;padding:28px 28px 30px;border:1px solid #e1e6f0;border-radius:22px;background:#f7f8fc;box-shadow:0 20px 65px #233d6306}#app-root>.workspace-heading{padding-top:32px;padding-bottom:26px}#app-root>.workspace-heading h1{font-size:32px}}
+#app-root [hidden]{display:none!important}
+#app-root .search-input-wrap input::placeholder{font-size:12px}
+#home .session-card small,#home .session-card>span:last-child{font-size:11px}
+#home .session-card b{font-size:12px}.scene-list-heading>span{font-size:10px}
